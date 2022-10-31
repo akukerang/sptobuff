@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -16,7 +15,7 @@ def getBuffPrice(itemname):
     driver.get(URL)
     time.sleep(2.5)
     listings = driver.page_source
-    soup = BeautifulSoup(listings, "lxml")
+    soup = BeautifulSoup(listings, "html5lib")
     # Gets the item link
     item = soup.find(title=str(itemname))
     itemhref = item.get('href')
@@ -25,8 +24,10 @@ def getBuffPrice(itemname):
     driver.get(URL2)
     time.sleep(2.5)
     itempage = driver.page_source
-    soup2 = BeautifulSoup(itempage, "lxml")
+    soup2 = BeautifulSoup(itempage, "html5lib")
     buffListing = soup2.find('a', href=re.compile("buff163"))
-    buffPrice = buffListing.find('span', itemprop="price").getText()
-    return buffPrice
+    buffPrice = buffListing.find('div', class_="price color-price").getText()
+    buffPrice = buffPrice.replace('$', '')
+    buffPrice = buffPrice.replace('\n', '')
+    return float(buffPrice)
 

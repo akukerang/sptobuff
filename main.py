@@ -20,6 +20,7 @@ def getItems(itemname):
 
 
 # item name in form of AK-47 | Aquamarine Revenge (Field-Tested)
-print("Enter item name: ")
-itemname = str(input())
-getItems(itemname)
+# print("Enter item name: ")
+# itemname = str(input())
+# getItems(itemname)
+getItems('AK-47 | Aquamarine Revenge (Field-Tested)')
