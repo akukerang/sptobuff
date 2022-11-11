@@ -1,6 +1,5 @@
-from skinport import getSkinportPrice
-from priceEmpireBuff import getBuffPrice
-
+from classes.skinport import getSkinportPrice
+from classes.priceEmpireBuff import getBuffPrice
 
 def profitcalculator(skinportPrice, buffPrice):
     afterFees = buffPrice - (buffPrice * 0.025)
@@ -23,3 +22,9 @@ def getItems(itemname):
 print("Enter item name: ")
 itemname = str(input())
 getItems(itemname)
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>spToBuff</title>
+    </head>
+    <body>
+        <h1>spToBuff</h1>
+        <div id="form">
+            <form method="post">
+                <label for="skinName">Skin</label>
+                <input type="text" id="skinName"><br/>
+                <datalist id="skinList">
+                    {% for makes in skinNameList %}
+                    <option value="{{ skins }}">
+                    {% endfor %}
+                </datalist>
+                <input type = "submit" value = "Submit">
+            </form>
+        </div>
+        <div id="results">
+
+        </div>
+
+    </body>
+
+
+</html>
+
