@@ -21,11 +21,3 @@ while(True):
         print("error here at " + str(start))
         break
 skinList.to_csv('csv/list.csv', index=False, header=False)
-
-
-
-
-
-# json_object = json.dumps(data.json(), indent=4)
-# with open("sample.json", "w") as outfile:
-#     outfile.write(json_object)
