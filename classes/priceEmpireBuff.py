@@ -13,7 +13,7 @@ driver = webdriver.Chrome(service=s, options=options)
 def getBuffPrice(itemname):
     URL = "https://pricempire.com/search?q=" + str(itemname)
     driver.get(URL)
-    time.sleep(2.5)
+    time.sleep(2.5) #delays to make sure page is loaded, change base off internet speed
     listings = driver.page_source
     soup = BeautifulSoup(listings, "xml")
     # Gets the item link

@@ -1,28 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>spToBuff</title>
+        <link rel="stylesheet" href="static/css/stylesheet.css">
     </head>
     <body>
-        <h1>spToBuff</h1>
+        <h1 id = "title">spToBuff</h1>
         <div id="form">
+            <h2>Enter skin name</h2>
             <form method="post">
                 <label for="skinName">Skin</label>
-                <input type="text" id="skinName"><br/>
+                <input type="text" id="skinName" name = "skinName" list ="skinList">
                 <datalist id="skinList">
-                    {% for makes in skinNameList %}
-                    <option value="{{ skins }}">
+                    {% for names in skinNames %}
+                    <option value="{{ names }}">
                     {% endfor %}
                 </datalist>
                 <input type = "submit" value = "Submit">
+                <p id = "error">{{error}}</p>
             </form>
         </div>
         <div id="results">
-
+            <h1>Results: {{results[0]}}</h1>
+            <h2>Skinport: {{results[1]}}</h2>
+            <h2>Buff: {{results[2]}}</h2>
+            <h2>After Fees: {{results[3]}}</h2>
+            <h2>Profit: {{results[4]}}</h2>
+            <h2>Percent gain: {{results[5]}}</h2>
         </div>
 
     </body>
-
-
 </html>
 
