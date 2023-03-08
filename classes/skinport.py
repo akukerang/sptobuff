@@ -7,8 +7,12 @@ def getSkinportPrice(itemname):
         weapontype = 'Pistol'
     elif 'MP7' in itemname or 'MP9' in itemname or 'PP-Bizon' in itemname or 'P90' in itemname or 'UMP-45' in itemname or 'MAC-10' in itemname or 'MP5-SD' in itemname:
         weapontype = 'SMG'
-    else:
+    elif 'Mag-7' in itemname or 'Sawed-Off' in itemname or 'Nova' in itemname or 'XM1014' in itemname or 'Negev' in itemname or 'M249' in itemname:
         weapontype = 'Heavy'
+    elif 'Gloves' in itemname or 'Hand Wraps' in itemname:
+        weapontype = 'Gloves'
+    else:
+        weapontype = 'Knife'
     types = itemname.split(" | ")[0]
     skin = itemname.split(" | ")[1].split(" (")[0]
     condition = itemname.split(" (")[1][:-1]
@@ -16,7 +20,7 @@ def getSkinportPrice(itemname):
         exteriorid = 2
     elif condition == "Minimal Wear":
         exteriorid = 4
-    elif condition == "Field tested":
+    elif condition == "Field-Tested":
         exteriorid = 3
     elif condition == "Well-Worn":
         exteriorid = 5
@@ -24,16 +28,20 @@ def getSkinportPrice(itemname):
         exteriorid = 1
     else:
         print("Condition Error")
+        print(condition)
     cookies = {
         '__cf_bm': 'cawY=',
         'i18n': 'en',
         '_csrf': 'asc',
     }
     if "StatTrak" in itemname:
-        types = types.replace("StatTrak™ ","")
+        types = types.split("StatTrak™ ")[1]
         st = 1
+    elif "★" in itemname:
+      types = types.replace("★ ","")
+      st = 0
     else:
-        st = 0
+      st = 0
     headers = {
         'authority': 'skinport.com',
         'accept': 'application/json, text/plain, */*',
@@ -57,7 +65,6 @@ def getSkinportPrice(itemname):
         'exterior': f'{exteriorid}',
         'stattrak': f'{st}'
     }
-
     response = requests.get('https://skinport.com/api/browse/730', params=params, cookies=cookies, headers=headers)
     r = response.json()
 
