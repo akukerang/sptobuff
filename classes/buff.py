@@ -1,8 +1,10 @@
 import requests
-from forex_python.converter import CurrencyRates
-class Buff:
-    c = CurrencyRates()
-    CNYtoUSD = c.get_rate('CNY', 'USD')
+def CNYtoUSD():
+        URL = "https://www.freeforexapi.com/api/live?pairs=USDCNY"
+        r=requests.get(URL).json()
+        return float(1/r["rates"]["USDCNY"]["rate"])
+class Buff:       
+    rate = CNYtoUSD()
     def __init__(self, header):
         self.header = {
             "Cookie": str(header)
@@ -16,6 +18,5 @@ class Buff:
         }
         r = requests.get(URL, params=params, headers=self.header).json()
         priceCNY = r["data"]["items"][0]["sell_min_price"]
-        priceUSD = float(priceCNY) * Buff.CNYtoUSD
+        priceUSD = float(priceCNY)  * self.rate
         return round(priceUSD, 2)
-
