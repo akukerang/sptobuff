@@ -1,4 +1,4 @@
-from classes.skinport import getSkinportPrice
+from classes.skinport import Skinport
 from classes.buff import Buff
 from flask import Flask, render_template, request
 import pandas as pd
@@ -7,7 +7,8 @@ import json
 with open("config.json", "r") as f:
     config = json.load(f)
 
-
+b = Buff(config["Cookies"])
+spClass = Skinport()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "amogusVR" #this doesn't really matter, just need it to run
@@ -17,13 +18,11 @@ def mainpage():
     skins = pd.read_csv('csv/skins.csv') #list for dropdown
     results = []    
     error = ""
-    b = Buff(config["Cookies"])
-
     if request.method == 'POST':
         skin = str(request.form.get('skinName'))
         if(skin): #if input not empty run
             try:
-                sp = getSkinportPrice(skin)
+                sp = spClass.getSkinportPrice(skin)
             except:
                 sp = 0;
             try:
