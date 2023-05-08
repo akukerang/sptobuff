@@ -24,15 +24,16 @@ def mainpage():
         if(skin): #if input not empty run
             try:
                 sp = getSkinportPrice(skin)
-                print(f'{sp} SP')
-                buff = b.getBuffPrice(skin)
-                print(f'{buff} buff')
-                afterFees = round((buff - (buff * 0.025)),2) #after fees Buff
-                profit = round(afterFees - sp,2)
-                gain = round((profit / sp) * 100,6)
-                results = [skin, '$'+str(sp), '$'+str(buff), '$'+str(afterFees), '$'+str(profit), str(gain)+'%']
             except:
-                error = "Please try another skin. Value not found"
+                sp = 0;
+            try:
+                buff = b.getBuffPrice(skin)
+            except:
+                buff = 0;
+            afterFees = round((buff - (buff * 0.025)),2) #after fees Buff
+            profit = round(afterFees - sp,2)
+            gain = round((profit / sp) * 100,6)
+            results = [skin, '$'+str(sp), '$'+str(buff), '$'+str(afterFees), '$'+str(profit), str(gain)+'%']
         else:
             error = "Please enter a value"
     return render_template('index.html',skinNames=skins.skinNames.values.tolist(), results = results, error = error)
