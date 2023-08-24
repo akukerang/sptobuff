@@ -1,6 +1,6 @@
 import requests
 
-def getSkinportPrice(itemname):
+def getSkinportPrice(itemname,s_csrf,s__cf_bm):
     if 'AK-47' in itemname or 'M4A4' in itemname or 'M4A1-S' in itemname or 'FAMAS' in itemname or 'Galil AR' in itemname or 'AWP' in itemname or 'G3SG1' in itemname or 'AUG' in itemname or 'Scar-20' in itemname or 'SG 553' in itemname or 'SSG 08' in itemname:
         weapontype = 'Rifle'
     elif 'R8 Revolver' in itemname or 'Dual Berettas' in itemname or 'Desert Eagle' in itemname or 'Glock-18' in itemname or 'P2000' in itemname or 'USP-S' in itemname or 'P250' in itemname or 'CZ75-Auto' in itemname or 'Tec-9' in itemname or 'Five-Seven' in itemname:
@@ -30,10 +30,10 @@ def getSkinportPrice(itemname):
         print("Condition Error")
         print(condition)
     cookies = {
-        '__cf_bm': 'cawY=',
-        'i18n': 'en',
-        '_csrf': 'asc',
-    }
+    '__cf_bm': s__cf_bm,
+    '_csrf': s_csrf,
+    
+}
     if "StatTrak" in itemname:
         types = types.split("StatTrak™ ")[1]
         st = 1
@@ -43,18 +43,15 @@ def getSkinportPrice(itemname):
     else:
       st = 0
     headers = {
-        'authority': 'skinport.com',
-        'accept': 'application/json, text/plain, */*',
-        'accept-language': 'en-US,en;q=0.9',
-        'referer': 'https://skinport.com/market',
-        'sec-ch-ua': '"Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36',
-    }
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/116.0',
+    'Accept': 'application/json, text/plain, */*',
+    'Accept-Language': 'en-US,en;q=0.5',
+    'Referer': 'https://skinport.com/market?cat=Pistol&type=USP-S&item=Target+Acquired',
+    'Connection': 'keep-alive',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+}
     
     params = {
         'cat': f'{weapontype}',
@@ -69,3 +66,4 @@ def getSkinportPrice(itemname):
     r = response.json()
 
     return float(r['items'][0]['salePrice']/100)
+
