@@ -18,12 +18,13 @@ def mainpage():
     results = []    
     error = ""
     b = Buff(config["Cookies"])
-
+    s_csrf = config["_csrf"]
+    s__cf_bm = config["__cf_bm"]
     if request.method == 'POST':
         skin = str(request.form.get('skinName'))
         if(skin): #if input not empty run
             try:
-                sp = getSkinportPrice(skin)
+                sp = getSkinportPrice(skin,s_csrf,s__cf_bm)
                 print(f'{sp} SP')
                 buff = b.getBuffPrice(skin)
                 print(f'{buff} buff')
