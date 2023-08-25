@@ -1,4 +1,4 @@
-from classes.skinport import Skinport
+from classes.skinport import getSkinportPrice
 from classes.buff import Buff
 from flask import Flask, render_template, request
 import pandas as pd
@@ -8,7 +8,6 @@ with open("config.json", "r") as f:
     config = json.load(f)
 
 b = Buff(config["Cookies"])
-spClass = Skinport()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "amogusVR" #this doesn't really matter, just need it to run
@@ -25,7 +24,6 @@ def mainpage():
         skin = str(request.form.get('skinName'))
         if(skin): #if input not empty run
             try:
-                
                 sp = getSkinportPrice(skin,s_csrf,s__cf_bm)
                 if isinstance(sp, str):
                     error = "No listing for that skin found on Skinport"
