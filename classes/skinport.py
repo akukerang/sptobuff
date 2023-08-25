@@ -1,5 +1,5 @@
 import requests
-
+import traceback
 def getSkinportPrice(itemname,s_csrf,s__cf_bm):
     if 'AK-47' in itemname or 'M4A4' in itemname or 'M4A1-S' in itemname or 'FAMAS' in itemname or 'Galil AR' in itemname or 'AWP' in itemname or 'G3SG1' in itemname or 'AUG' in itemname or 'Scar-20' in itemname or 'SG 553' in itemname or 'SSG 08' in itemname:
         weapontype = 'Rifle'
@@ -64,6 +64,10 @@ def getSkinportPrice(itemname,s_csrf,s__cf_bm):
     }
     response = requests.get('https://skinport.com/api/browse/730', params=params, cookies=cookies, headers=headers)
     r = response.json()
-
-    return float(r['items'][0]['salePrice']/100)
-
+    if len(r['items']) == 0:
+        return "empty"
+    try:
+        return float(r['items'][0]['salePrice']/100)
+    except Exception:
+        print(traceback.format_exc())
+        print(r)
