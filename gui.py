@@ -27,8 +27,9 @@ def checkKey(event):
         data = skin_names
         skinList.pack_forget()
     else:
+        errorMessage.pack_forget()
         submitButton.pack_forget()
-        skinList.pack()
+        skinList.pack(padx=20)
         submitButton.pack(pady=30)
         data = []
         for item in skin_names:
@@ -56,11 +57,10 @@ def Submit():
         try:
             sp = s.getSkinportPrice(selectedItem)
             buff = b.getBuffPrice(selectedItem)
-            print(buff)
             afterFees = round((buff - (buff * 0.025)),2) #after fees Buff
             profit = round(afterFees - sp,2)
             gain = round((profit / sp) * 100,6)
-            results = [selectedItem, '$'+str(sp), '$'+str(buff), '$'+str(afterFees), '$'+str(profit), str(gain)+'%']
+            results = [selectedItem, '$'+str(sp), '$'+str(buff), '$'+str(afterFees), str(profit), str(gain)+'%']
             updateResults(results)
         except:
             displayError("Please try another skin. Value not found")
@@ -73,8 +73,12 @@ def updateResults(results):
     spPrice.config(text=f"Skinport: {results[1]}")
     buffPrice.config(text=f"Buff: {results[2]}")
     afterFees.config(text=f"After Fees: {results[3]}")
-    profit.config(text=f"Profit: {results[4]}")
-    gain.config(text=f"Gain: {results[5]}")
+    if(float(results[4]) < 0):
+        profit.config(text=f"Profit: ${results[4]}", fg="red")
+        gain.config(text=f"Gain: {results[5]}", fg="red")
+    else:
+        profit.config(text=f"Profit: ${results[4]}", fg="green")
+        gain.config(text=f"Gain: {results[5]}", fg="green")
     skinName.pack()
     spPrice.pack()
     buffPrice.pack()
@@ -87,20 +91,28 @@ def updateResults(results):
 app = tk.Tk()
 app.title("spToBuff")
 app.resizable(False, False)
-app.geometry("800x400")
+app.geometry("800x450")
+app.minsize(800,450)
+app.maxsize(800,450)
+
+
+
 app.configure(bg="lightgray")
-selectFrame = Frame(app, width=400, height=400, bg="lightgray")
+selectFrame = Frame(app, width=300, height=450, bg="lightgray")
 selectFrame.pack(side="left", fill="both", expand=True,pady=30)
 
-resultFrame = Frame(app, width=400, height=400,  bg="lightgray")
-resultFrame.pack(side="right", fill="both", expand=True, pady=30, padx=30)
+resultFrame = Frame(app, width=500, height=450,  bg="lightgray")
+resultFrame.pack(side="right", fill="both", expand=True, pady=(30,0), padx=30)
+
+selectFrame.pack_propagate(False)
+resultFrame.pack_propagate(False)
 
 label = tk.Label(selectFrame, text="Select a skin:", font=("Arial", 12))
 label.pack(pady=10)
 
 skinEntry = Entry(selectFrame, width=50)
 skinEntry.bind("<KeyRelease>", checkKey)
-skinEntry.pack(padx = 10)
+skinEntry.pack(padx = 20)
 
 skinList = Listbox(selectFrame, width=50)
 update(skin_names)
