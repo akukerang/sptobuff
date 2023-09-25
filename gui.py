@@ -52,66 +52,70 @@ def Submit():
     try:
         selectedIndex = skinList.curselection()
         selectedItem = skinList.get(selectedIndex[0])
-        print("Selected item: " + selectedItem)
         errorMessage.pack_forget()
         try:
-            print('here0')
             sp = s.getSkinportPrice(selectedItem)
-            print('here1')
-            if isinstance(sp, str):
-                displayError("No listing for that skin found on Skinport")
-            print(f'{sp} SP')
             buff = b.getBuffPrice(selectedItem)
-            print(f'{buff} buff')
+            print(buff)
             afterFees = round((buff - (buff * 0.025)),2) #after fees Buff
             profit = round(afterFees - sp,2)
             gain = round((profit / sp) * 100,6)
             results = [selectedItem, '$'+str(sp), '$'+str(buff), '$'+str(afterFees), '$'+str(profit), str(gain)+'%']
             updateResults(results)
-            print(results)
         except:
             displayError("Please try another skin. Value not found")
-                
     except:
         displayError("Please enter a skin")
 
 
 def updateResults(results):
-    pass
+    skinName.config(text=results[0])
+    spPrice.config(text=f"Skinport: {results[1]}")
+    buffPrice.config(text=f"Buff: {results[2]}")
+    afterFees.config(text=f"After Fees: {results[3]}")
+    profit.config(text=f"Profit: {results[4]}")
+    gain.config(text=f"Gain: {results[5]}")
+    skinName.pack()
+    spPrice.pack()
+    buffPrice.pack()
+    afterFees.pack()
+    profit.pack()
+    gain.pack()
 
 
 
 app = tk.Tk()
 app.title("spToBuff")
 app.resizable(False, False)
+app.geometry("800x400")
+app.configure(bg="lightgray")
+selectFrame = Frame(app, width=400, height=400, bg="lightgray")
+selectFrame.pack(side="left", fill="both", expand=True,pady=30)
 
+resultFrame = Frame(app, width=400, height=400,  bg="lightgray")
+resultFrame.pack(side="right", fill="both", expand=True, pady=30, padx=30)
 
-selectFrame = Frame(app, width=300, height=400, bg="lightgray")
-selectFrame.pack(side="left", fill="both", expand=True)
-
-resultFrame = Frame(app, width=600, height=400)
-resultFrame.pack(side="right", fill="both", expand=True)
-
-label = tk.Label(selectFrame, text="Select a skin:")
+label = tk.Label(selectFrame, text="Select a skin:", font=("Arial", 12))
 label.pack(pady=10)
 
 skinEntry = Entry(selectFrame, width=50)
 skinEntry.bind("<KeyRelease>", checkKey)
-skinEntry.pack()
+skinEntry.pack(padx = 10)
 
 skinList = Listbox(selectFrame, width=50)
 update(skin_names)
 
 errorMessage = tk.Label(selectFrame, fg="red")
 
-submitButton = tk.Button(selectFrame, text="Submit", command=Submit)
+submitButton = tk.Button(selectFrame, text="Submit", font=("Arial", 12), command=Submit)
 submitButton.pack(pady=30)
 
 
-
-
-
-
-
+skinName = tk.Label(resultFrame, font=("Arial", 12))
+spPrice = tk.Label(resultFrame, font=("Arial", 12))
+buffPrice = tk.Label(resultFrame, font=("Arial", 12))
+afterFees = tk.Label(resultFrame, font=("Arial", 12))
+profit = tk.Label(resultFrame, font=("Arial", 12))
+gain = tk.Label(resultFrame, font=("Arial", 12))
 
 app.mainloop()
