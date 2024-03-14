@@ -1,8 +1,8 @@
 import requests
 def CNYtoUSD():
-        URL = "https://www.freeforexapi.com/api/live?pairs=USDCNY"
+        URL = "https://theforexapi.com/api/latest?base=CNY"
         r=requests.get(URL).json()
-        return float(1/r["rates"]["USDCNY"]["rate"])
+        return float(r["rates"]["USD"])
 class Buff:       
     rate = CNYtoUSD()
     def __init__(self, header):
@@ -20,3 +20,6 @@ class Buff:
         priceCNY = r["data"]["items"][0]["sell_min_price"]
         priceUSD = float(priceCNY)  * self.rate
         return round(priceUSD, 2)
+
+
+
