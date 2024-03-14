@@ -7,7 +7,7 @@ Compares Skinport Prices to Buff.163
     - Inspect element -> Network -> Domain: `Buff.163.com` -> File:  `/` -> Request Headers -> Cookie
     - Enter the cookie value into config.json
 ![network](/images/network.png) 
-2. Run `sptobuff.exe`
+2. Run `gui.exe`
 3. Search a skin name and select from the list
 4. Press Submit
 
